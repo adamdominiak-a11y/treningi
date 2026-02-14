@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Projekt 85kg">
+<meta name="theme-color" content="#1e3a5f">
+<title>Projekt 85 kg</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#f5f5f7;color:#1d1d1f;-webkit-tap-highlight-color:transparent}
+.app{max-width:500px;margin:0 auto;padding:12px 12px 80px;min-height:100vh}
+.hdr{text-align:center;padding:8px 0 12px}
+.hdr h1{font-size:20px;margin:0}
+.hdr p{font-size:11px;color:#999;margin:2px 0 0}
+.nav{display:flex;background:#e5e5ea;border-radius:8px;padding:2px;margin-bottom:12px}
+.nav button{flex:1;padding:7px 0;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:#8e8e93}
+.nav button.on{background:#fff;color:#1d1d1f;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.wnav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.wnav button{padding:5px 12px;border-radius:6px;border:1px solid #d1d1d6;background:#fff;font-size:12px;cursor:pointer;color:#333}
+.wnav-center{text-align:center}
+.wnav-center b{font-size:14px;display:block}
+.wnav-center button{border:none;background:none;color:#007aff;font-size:11px;cursor:pointer;padding:2px}
+.day{border:1px solid #d1d1d6;border-radius:12px;padding:10px 12px;margin-bottom:6px;cursor:pointer;background:#fff}
+.day:active{opacity:.8}
+.day.today{border:2px solid #007aff;background:#f0f5ff}
+.day-row{display:flex;justify-content:space-between;align-items:center}
+.day-left{display:flex;align-items:center;gap:8px}
+.day-dn{font-weight:700;font-size:13px;width:28px;color:#8e8e93}
+.day.today .day-dn{color:#007aff}
+.day-dt{font-size:12px;color:#aeaeb2}
+.day-block{font-size:13px}
+.day-block b{font-weight:600}
+.day-empty{font-size:12px;color:#d1d1d6;font-style:italic}
+.day-right{display:flex;align-items:center;gap:4px;font-size:14px}
+.badge{background:#007aff;color:#fff;font-size:9px;padding:2px 6px;border-radius:10px;font-weight:700}
+.back{background:none;border:none;color:#007aff;font-size:13px;cursor:pointer;margin-bottom:6px;padding:0}
+.wo-title{font-size:15px;font-weight:bold;margin:4px 0 8px}
+.bsel{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0 12px}
+.bsel button{padding:4px 10px;border-radius:8px;font-size:16px;cursor:pointer;border:2px solid transparent;background:#f2f2f7}
+.bsel button.on{background:#333}
+.bsel .del{font-size:12px;color:#ff3b30;background:#fff;border:1px solid #fca5a5;padding:4px 8px;border-radius:8px;cursor:pointer}
+.wo-hdr{color:#fff;padding:8px 12px;border-radius:10px 10px 0 0;font-weight:700;font-size:14px}
+.wo-list{border:1px solid #e5e5ea;border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
+.ex{padding:10px;border-bottom:1px solid #f2f2f7}
+.ex:last-child{border-bottom:none}
+.ex-name{font-weight:600;font-size:13px;margin-bottom:2px}
+.ex-info{font-size:11px;color:#8e8e93;margin-bottom:2px}
+.ex-notes{font-size:11px;color:#aeaeb2;margin-bottom:4px}
+.ex input{width:100%;padding:6px 8px;border:1px solid #d1d1d6;border-radius:8px;font-size:13px;background:#f9f9fb}
+.ex input:focus{outline:none;border-color:#007aff;background:#fff}
+.status-btns{display:flex;gap:4px;margin:8px 0}
+.status-btns button{flex:1;padding:6px 0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #d1d1d6;background:#fff;color:#8e8e93}
+.status-btns button.on-done{border-color:#34c759;color:#34c759;background:#f0fdf4}
+.status-btns button.on-partial{border-color:#ff9500;color:#ff9500;background:#fffbeb}
+.status-btns button.on-skipped{border-color:#ff3b30;color:#ff3b30;background:#fef2f2}
+.save-btn{width:100%;padding:11px;background:#007aff;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px}
+.save-btn:active{background:#0056b3}
+.elbow-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;margin-top:8px}
+.elbow-row label{font-size:12px;font-weight:600}
+.elbow-row input{width:50px;padding:4px;border:1px solid #d1d1d6;border-radius:6px;text-align:center;font-size:13px}
+.wbox{margin-top:12px;padding:10px;background:#f9f9fb;border-radius:10px;border:1px solid #e5e5ea}
+.wbox-title{font-weight:700;font-size:12px;margin-bottom:5px}
+.wbox-row{display:flex;gap:6px}
+.wbox input{flex:1;padding:5px 8px;border:1px solid #d1d1d6;border-radius:6px;font-size:13px}
+.wbox button{padding:5px 12px;background:#1d1d1f;color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer}
+.wbox-hist{margin-top:5px;font-size:11px;color:#aeaeb2}
+.empty-block{text-align:center;padding:30px;color:#d1d1d6;font-size:14px}
+.toast{position:fixed;top:10px;right:10px;background:#1d1d1f;color:#fff;padding:5px 14px;border-radius:8px;font-size:12px;z-index:99;opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+@media(prefers-color-scheme:dark){
+body{background:#000;color:#f5f5f7}
+.nav{background:#1c1c1e}
+.nav button{color:#8e8e93}
+.nav button.on{background:#2c2c2e;color:#f5f5f7}
+.day{background:#1c1c1e;border-color:#38383a}
+.day.today{background:#0a1a2f;border-color:#007aff}
+.wnav button{background:#1c1c1e;border-color:#38383a;color:#f5f5f7}
+.wo-list{border-color:#38383a}
+.ex{border-color:#2c2c2e}
+.ex input{background:#2c2c2e;border-color:#38383a;color:#f5f5f7}
+.status-btns button{background:#1c1c1e;border-color:#38383a}
+.bsel button{background:#2c2c2e}
+.wbox{background:#1c1c1e;border-color:#38383a}
+.wbox input{background:#2c2c2e;border-color:#38383a;color:#f5f5f7}
+.wbox button{background:#f5f5f7;color:#000}
+.toast{background:#f5f5f7;color:#000}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+var BLOCKS = {
+  UPPER_A: {emoji:"\u{1F170}\uFE0F", name:"Upper A \u2014 Si\u0142a Max", hdr:"#dc2626", exercises:[
+    {id:"ua1",name:"Rozgrzewka: Wio\u015Blarz",info:"\u2014 \u00D7 5 min | Lekko",notes:"Rozgrzej plecy"},
+    {id:"ua2",name:"\u2605 Lat Pulldown",info:"3+1 \u00D7 5 | 55/test 57,5 kg",notes:"Tempo 2-0-2. Seria 4=TEST"},
+    {id:"ua3",name:"Wios\u0142owanie hantlem",info:"4 \u00D7 5/str. | 25 kg (22\u201327)",notes:"\u0141opatka \u015Bci\u0105gni\u0119ta"},
+    {id:"ua4",name:"Wyciskanie hantli",info:"4 \u00D7 5 | 20 kg (18\u201322)",notes:"\u0141okcie 45\u00B0"},
+    {id:"ua5",name:"Spacer Farmera",info:"3 \u00D7 50s | 24 kg",notes:"Brzuch napi\u0119ty"}
+  ]},
+  UPPER_B: {emoji:"\u{1F171}\uFE0F", name:"Upper B \u2014 Obj\u0119to\u015B\u0107", hdr:"#2563eb", exercises:[
+    {id:"ub1",name:"Rozgrzewka: Wio\u015Blarz",info:"\u2014 \u00D7 5 min | Lekko",notes:""},
+    {id:"ub2",name:"SS1a: Wyciskanie hantli",info:"3 \u00D7 10 | 15 kg (14\u201316)",notes:"\u2192 od razu SS1b"},
+    {id:"ub3",name:"SS1b: Lat Pulldown",info:"3 \u00D7 10 | 42,5 kg (40\u201345)",notes:"90s\u20132min po SS"},
+    {id:"ub4",name:"SS2a: Wios\u0142owanie",info:"3 \u00D7 10/str. | 20 kg (18\u201322)",notes:"\u2192 od razu SS2b"},
+    {id:"ub5",name:"SS2b: Rozpi\u0119tki",info:"3 \u00D7 12 | 9 kg (8\u201310)",notes:"2-3s opuszczanie"},
+    {id:"ub6",name:"Australian Pull-up",info:"4 \u00D7 8\u201310 | BW",notes:"Stopy na ziemi/\u0142awce"},
+    {id:"ub7",name:"Face Pull",info:"3 \u00D7 15 | Lekko",notes:"Zdrowie bark\u00F3w"}
+  ]},
+  UPPER_C: {emoji:"\u{1F172}", name:"Upper C \u2014 Technika", hdr:"#7c3aed", exercises:[
+    {id:"uc1",name:"LP ekscentryk (4s)",info:"4 \u00D7 6 | 45 kg (42\u201348)",notes:"4 sek opuszczanie!"},
+    {id:"uc2",name:"Scapular Pulldown",info:"3 \u00D7 8 | 30 kg (25\u201330)",notes:"Proste r\u0119ce, 2s hold"},
+    {id:"uc3",name:"Wios\u0142owanie odwr.",info:"3 \u00D7 10 | 20 kg (18\u201322)",notes:"Biceps + dolne trapezy"},
+    {id:"uc4",name:"M\u0142otki",info:"3 \u00D7 10 | 10\u201312 kg",notes:"Kontrola \u0142okci!"},
+    {id:"uc5",name:"Reverse Fly",info:"3 \u00D7 15 | 6\u20138 kg",notes:"Wolne tempo"},
+    {id:"uc6",name:"Zwis na czas",info:"3 \u00D7 MAX | BW",notes:"Notuj sekundy!"}
+  ]},
+  LEGS: {emoji:"\u{1F9B5}", name:"Nogi \u2014 Maintenance", hdr:"#d97706", exercises:[
+    {id:"lg1",name:"Rozgrzewka: Rower",info:"\u2014 \u00D7 5 min | Lekko",notes:""},
+    {id:"lg2",name:"RDL",info:"3 \u00D7 10 | 70 kg",notes:"BEZ progresji!"},
+    {id:"lg3",name:"Przysiad Zerchera",info:"3 \u00D7 10 | 50 kg",notes:"BEZ progresji!"},
+    {id:"lg4",name:"Wspi\u0119cia na palce",info:"3 \u00D7 15 | BW",notes:""},
+    {id:"lg5",name:"Plank boczny",info:"3 \u00D7 30s/str. | \u2014",notes:"Biodra nie opadaj\u0105"},
+    {id:"lg6",name:"Dead Bug",info:"3 \u00D7 8/str. | \u2014",notes:"Plecy na pod\u0142odze"}
+  ]},
+  INTERVALS: {emoji:"\u{1F3C3}\u200D\u2642\uFE0F", name:"Interwa\u0142y 5x3min", hdr:"#059669", exercises:[
+    {id:"in1",name:"Rozgrzewka trucht",info:"10 min | HR <130",notes:""},
+    {id:"in2",name:"Interwa\u0142 1",info:"3 min | HR 155-165 | >=165 spm",notes:""},
+    {id:"in3",name:"Odpoczynek 1",info:"2 min trucht | HR <130",notes:""},
+    {id:"in4",name:"Interwa\u0142 2",info:"3 min | HR 155-165",notes:""},
+    {id:"in5",name:"Odpoczynek 2",info:"2 min | HR <130",notes:""},
+    {id:"in6",name:"Interwa\u0142 3",info:"3 min | HR 155-165",notes:""},
+    {id:"in7",name:"Odpoczynek 3",info:"2 min | HR <130",notes:""},
+    {id:"in8",name:"Interwa\u0142 4",info:"3 min | HR 155-165",notes:""},
+    {id:"in9",name:"Odpoczynek 4",info:"2 min | HR <130",notes:""},
+    {id:"in10",name:"Interwa\u0142 5",info:"3 min | HR 155-165",notes:""},
+    {id:"in11",name:"Sch\u0142odzenie",info:"8 min | HR <130",notes:""}
+  ]},
+  LONG_RUN: {emoji:"\u{1F3C3}", name:"D\u0142ugie wybieganie 65min", hdr:"#0d9488", exercises:[
+    {id:"lr1",name:"Bieg Strefa 2",info:"65 min | HR 135-145 | >=160 spm",notes:""},
+    {id:"lr2",name:"Mikropauzy",info:"30s marszu co 15 min",notes:"Gdy HR >145"}
+  ]},
+  REST: {emoji:"\u{1F634}", name:"Rest", hdr:"#6b7280", exercises:[
+    {id:"re1",name:"Lekki rower LUB pe\u0142ny rest",info:"30-40 min | HR <120",notes:""}
+  ]}
+};
+var BK=Object.keys(BLOCKS);
+var DN=["Nd","Pn","Wt","Sr","Czw","Pt","Sob"];
+function loadData(){try{var s=localStorage.getItem("p85");return s?JSON.parse(s):{plan:{},results:{},weights:[]};}catch(e){return{plan:{},results:{},weights:[]};}}
+function saveData(d){try{localStorage.setItem("p85",JSON.stringify(d));}catch(e){}}
+var DATA=loadData();
+function ds(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function pl(d){return String(d.getDate()).padStart(2,"0")+"."+String(d.getMonth()+1).padStart(2,"0")}
+function getMon(off){var d=new Date();d.setDate(d.getDate()+off*7);var day=d.getDay();d.setDate(d.getDate()-((day+6)%7));d.setHours(12,0,0,0);return d}
+var STATE={page:"week",sel:ds(new Date()),weekOff:0};
+var INPUTS={};
+function flash(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},1500)}
+function render(){
+  var app=document.getElementById("app");
+  app.innerHTML="";
+  var h=document.createElement("div");h.className="hdr";
+  h.innerHTML="<h1>&#127947; Projekt 85 kg</h1><p>Blok luty-marzec 2026</p>";
+  app.appendChild(h);
+  var nav=document.createElement("div");nav.className="nav";
+  var b1=document.createElement("button");b1.textContent="Tydzien";b1.className=STATE.page==="week"?"on":"";
+  b1.onclick=function(){STATE.page="week";render();};
+  var b2=document.createElement("button");b2.textContent="Trening";b2.className=STATE.page==="workout"?"on":"";
+  b2.onclick=function(){STATE.page="workout";render();};
+  nav.appendChild(b1);nav.appendChild(b2);app.appendChild(nav);
+  if(STATE.page==="week")renderWeek(app);else renderWorkout(app);
+}
+function renderWeek(app){
+  var week=[];var mon=getMon(STATE.weekOff);
+  for(var i=0;i<7;i++){var dd=new Date(mon);dd.setDate(mon.getDate()+i);week.push(dd);}
+  var today=ds(new Date());
+  var wnav=document.createElement("div");wnav.className="wnav";
+  var prev=document.createElement("button");prev.innerHTML="&#9664;";prev.onclick=function(){STATE.weekOff--;render();};
+  var next=document.createElement("button");next.innerHTML="&#9654;";next.onclick=function(){STATE.weekOff++;render();};
+  var center=document.createElement("div");center.className="wnav-center";
+  var lb=document.createElement("b");lb.textContent=pl(week[0])+" - "+pl(week[6]);center.appendChild(lb);
+  if(STATE.weekOff!==0){var tb=document.createElement("button");tb.textContent="dzis";tb.onclick=function(){STATE.weekOff=0;render();};center.appendChild(tb);}
+  wnav.appendChild(prev);wnav.appendChild(center);wnav.appendChild(next);app.appendChild(wnav);
+  for(var i=0;i<7;i++){
+    var d=week[i];var dstr=ds(d);var bk=DATA.plan[dstr];var block=bk?BLOCKS[bk]:null;
+    var dr=DATA.results[dstr]||{};var isT=dstr===today;var st=dr._status;
+    var div=document.createElement("div");div.className="day"+(isT?" today":"");
+    var row=document.createElement("div");row.className="day-row";
+    var left=document.createElement("div");left.className="day-left";
+    var dn=document.createElement("span");dn.className="day-dn";dn.textContent=DN[d.getDay()];
+    var dt=document.createElement("span");dt.className="day-dt";dt.textContent=pl(d);
+    left.appendChild(dn);left.appendChild(dt);
+    if(block){var bn=document.createElement("span");bn.className="day-block";bn.innerHTML=block.emoji+" <b>"+block.name+"</b>";left.appendChild(bn);}
+    else{var em=document.createElement("span");em.className="day-empty";em.textContent="Kliknij...";left.appendChild(em);}
+    var right=document.createElement("div");right.className="day-right";
+    if(isT){var bg=document.createElement("span");bg.className="badge";bg.textContent="DZIS";right.appendChild(bg);}
+    if(st==="done")right.textContent+=" \u2705";if(st==="partial")right.textContent+=" \u26A0\uFE0F";if(st==="skipped")right.textContent+=" \u274C";
+    row.appendChild(left);row.appendChild(right);div.appendChild(row);
+    div.setAttribute("data-date",dstr);
+    div.onclick=function(){STATE.sel=this.getAttribute("data-date");STATE.page="workout";INPUTS=Object.assign({},DATA.results[STATE.sel]||{});render();};
+    app.appendChild(div);
+  }
+}
+function renderWorkout(app){
+  var sel=STATE.sel;var sd=new Date(sel+"T12:00:00");var bk=DATA.plan[sel];var block=bk?BLOCKS[bk]:null;
+  var back=document.createElement("button");back.className="back";back.innerHTML="&#8592; Powrot";
+  back.onclick=function(){STATE.page="week";render();};app.appendChild(back);
+  var title=document.createElement("div");title.className="wo-title";title.textContent=DN[sd.getDay()]+" "+pl(sd);app.appendChild(title);
+  var bsel=document.createElement("div");bsel.className="bsel";
+  for(var i=0;i<BK.length;i++){
+    var btn=document.createElement("button");btn.textContent=BLOCKS[BK[i]].emoji;btn.setAttribute("data-bk",BK[i]);
+    if(bk===BK[i])btn.className="on";
+    btn.onclick=function(){DATA.plan[sel]=this.getAttribute("data-bk");saveData(DATA);flash("OK");render();};
+    bsel.appendChild(btn);
+  }
+  if(bk){var del=document.createElement("button");del.className="del";del.textContent="X";del.onclick=function(){delete DATA.plan[sel];saveData(DATA);render();};bsel.appendChild(del);}
+  app.appendChild(bsel);
+  if(block){
+    var hd=document.createElement("div");hd.className="wo-hdr";hd.style.background=block.hdr;hd.textContent=block.emoji+" "+block.name;app.appendChild(hd);
+    var list=document.createElement("div");list.className="wo-list";
+    for(var j=0;j<block.exercises.length;j++){
+      var ex=block.exercises[j];var exDiv=document.createElement("div");exDiv.className="ex";
+      if(j%2===1)exDiv.style.background="#f9f9fb";
+      var nm=document.createElement("div");nm.className="ex-name";nm.textContent=ex.name;exDiv.appendChild(nm);
+      var inf=document.createElement("div");inf.className="ex-info";inf.textContent=ex.info;exDiv.appendChild(inf);
+      if(ex.notes){var nt=document.createElement("div");nt.className="ex-notes";nt.textContent=ex.notes;exDiv.appendChild(nt);}
+      var inp=document.createElement("input");inp.placeholder="wynik...";inp.value=INPUTS[ex.id]||"";inp.setAttribute("data-id",ex.id);
+      inp.oninput=function(){INPUTS[this.getAttribute("data-id")]=this.value;};exDiv.appendChild(inp);
+      list.appendChild(exDiv);
+    }
+    app.appendChild(list);
+    if(bk==="UPPER_A"||bk==="UPPER_C"){
+      var elr=document.createElement("div");elr.className="elbow-row";
+      var lbl=document.createElement("label");lbl.textContent="Lokcie (0-10):";
+      var einp=document.createElement("input");einp.type="number";einp.min=0;einp.max=10;einp.value=INPUTS._elbows||"";
+      einp.oninput=function(){INPUTS._elbows=this.value;};
+      elr.appendChild(lbl);elr.appendChild(einp);app.appendChild(elr);
+    }
+    var sbtns=document.createElement("div");sbtns.className="status-btns";
+    var sts=[{v:"done",l:"Zrobione",c:"on-done"},{v:"partial",l:"Czesciowo",c:"on-partial"},{v:"skipped",l:"Pominiete",c:"on-skipped"}];
+    for(var k=0;k<sts.length;k++){
+      var sb=document.createElement("button");sb.textContent=sts[k].l;sb.setAttribute("data-st",sts[k].v);sb.setAttribute("data-cls",sts[k].c);
+      if(INPUTS._status===sts[k].v)sb.className=sts[k].c;
+      sb.onclick=function(){INPUTS._status=this.getAttribute("data-st");var all=this.parentNode.children;for(var x=0;x<all.length;x++)all[x].className="";this.className=this.getAttribute("data-cls");};
+      sbtns.appendChild(sb);
+    }
+    app.appendChild(sbtns);
+    var save=document.createElement("button");save.className="save-btn";save.textContent="Zapisz wyniki";
+    save.onclick=function(){DATA.results[sel]=Object.assign({},INPUTS);saveData(DATA);flash("Zapisano!");};
+    app.appendChild(save);
+  }else{
+    var emp=document.createElement("div");emp.className="empty-block";emp.textContent="Wybierz blok powyzej";app.appendChild(emp);
+  }
+  var wbox=document.createElement("div");wbox.className="wbox";
+  var wt=document.createElement("div");wt.className="wbox-title";wt.textContent="Waga (rano, na czczo)";wbox.appendChild(wt);
+  var wr=document.createElement("div");wr.className="wbox-row";
+  var winp=document.createElement("input");winp.type="number";winp.step="0.1";winp.placeholder="np. 96.5";winp.id="winp";
+  var wbtn=document.createElement("button");wbtn.textContent="Zapisz";
+  wbtn.onclick=function(){var v=document.getElementById("winp").value;if(v){DATA.weights.push({date:sel,kg:parseFloat(v)});saveData(DATA);document.getElementById("winp").value="";flash("OK");render();}};
+  wr.appendChild(winp);wr.appendChild(wbtn);wbox.appendChild(wr);
+  if(DATA.weights&&DATA.weights.length>0){var hist=document.createElement("div");hist.className="wbox-hist";hist.textContent=DATA.weights.slice(-5).map(function(w){return w.date.slice(5)+": "+w.kg+"kg";}).join(" > ");wbox.appendChild(hist);}
+  app.appendChild(wbox);
+}
+render();
+</script>
+</body>
+</html>
