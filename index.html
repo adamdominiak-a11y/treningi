@@ -14,17 +14,27 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#f5f5f7;color:#1d1d1f;-webkit-tap-highlight-color:transparent}
-.app{max-width:500px;margin:0 auto;padding:12px 12px 80px;min-height:100vh}
-.hdr{text-align:center;padding:8px 0 12px}
-.hdr h1{font-size:20px;margin:0}
+.app{max-width:500px;margin:0 auto;padding:0 12px 80px;min-height:100vh}
+.hdr{text-align:center;padding:8px 0 4px}
+.hdr h1{font-size:18px;margin:0}
 .hdr p{font-size:11px;color:#999;margin:2px 0 0}
-.nav{display:flex;background:#e5e5ea;border-radius:8px;padding:2px;margin-bottom:12px}
-.nav button{flex:1;padding:7px 0;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:#8e8e93}
+
+/* TODAY BANNER */
+.banner{margin:8px 0;padding:10px 12px;border-radius:12px;color:#fff;position:relative}
+.banner-title{font-weight:700;font-size:14px;margin-bottom:2px}
+.banner-sub{font-size:12px;opacity:.85}
+.banner-rest{background:linear-gradient(135deg,#6b7280,#4b5563)}
+
+/* NAV */
+.nav{display:flex;background:#e5e5ea;border-radius:8px;padding:2px;margin-bottom:10px}
+.nav button{flex:1;padding:6px 0;border:none;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#8e8e93}
 .nav button.on{background:#fff;color:#1d1d1f;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+/* WEEK */
 .wnav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .wnav button{padding:5px 12px;border-radius:6px;border:1px solid #d1d1d6;background:#fff;font-size:12px;cursor:pointer;color:#333}
 .wnav-center{text-align:center}
-.wnav-center b{font-size:14px;display:block}
+.wnav-center b{font-size:13px;display:block}
 .wnav-center button{border:none;background:none;color:#007aff;font-size:11px;cursor:pointer;padding:2px}
 .day{border:1px solid #d1d1d6;border-radius:12px;padding:10px 12px;margin-bottom:6px;cursor:pointer;background:#fff}
 .day:active{opacity:.8}
@@ -39,6 +49,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#f
 .day-empty{font-size:12px;color:#d1d1d6;font-style:italic}
 .day-right{display:flex;align-items:center;gap:4px;font-size:14px}
 .badge{background:#007aff;color:#fff;font-size:9px;padding:2px 6px;border-radius:10px;font-weight:700}
+
+/* WORKOUT */
 .back{background:none;border:none;color:#007aff;font-size:13px;cursor:pointer;margin-bottom:6px;padding:0}
 .wo-title{font-size:15px;font-weight:bold;margin:4px 0 8px}
 .bsel{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0 12px}
@@ -49,6 +61,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#f
 .wo-list{border:1px solid #e5e5ea;border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
 .ex{padding:10px;border-bottom:1px solid #f2f2f7}
 .ex:last-child{border-bottom:none}
+.ex-alt{background:#f5f5f7}
 .ex-name{font-weight:600;font-size:13px;margin-bottom:2px}
 .ex-info{font-size:11px;color:#8e8e93;margin-bottom:2px}
 .ex-notes{font-size:11px;color:#aeaeb2;margin-bottom:4px}
@@ -61,6 +74,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#f
 .status-btns button.on-skipped{border-color:#ff3b30;color:#ff3b30;background:#fef2f2}
 .save-btn{width:100%;padding:11px;background:#007aff;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px}
 .save-btn:active{background:#0056b3}
+.copy-btn{width:100%;padding:9px;background:#34c759;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px}
+.copy-btn:active{background:#2da44e}
 .elbow-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;margin-top:8px}
 .elbow-row label{font-size:12px;font-weight:600}
 .elbow-row input{width:50px;padding:4px;border:1px solid #d1d1d6;border-radius:6px;text-align:center;font-size:13px}
@@ -71,13 +86,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#f
 .wbox button{padding:5px 12px;background:#1d1d1f;color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer}
 .wbox-hist{margin-top:5px;font-size:11px;color:#aeaeb2}
 .empty-block{text-align:center;padding:30px;color:#d1d1d6;font-size:14px}
+
+/* CHAT */
+.chat-box{display:flex;flex-direction:column;height:calc(100vh - 180px);min-height:400px}
+.chat-msgs{flex:1;overflow-y:auto;padding:8px 0;-webkit-overflow-scrolling:touch}
+.chat-msg{margin-bottom:8px;max-width:85%;padding:8px 12px;border-radius:14px;font-size:13px;line-height:1.4;word-wrap:break-word;white-space:pre-wrap}
+.chat-msg.user{background:#007aff;color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.chat-msg.ai{background:#e5e5ea;color:#1d1d1f;margin-right:auto;border-bottom-left-radius:4px}
+.chat-msg.system{background:#fff3cd;color:#856404;margin:4px auto;text-align:center;font-size:11px;border-radius:8px;max-width:95%}
+.chat-input{display:flex;gap:6px;padding:8px 0}
+.chat-input input{flex:1;padding:8px 12px;border:1px solid #d1d1d6;border-radius:20px;font-size:14px;background:#fff}
+.chat-input input:focus{outline:none;border-color:#007aff}
+.chat-input button{padding:8px 16px;background:#007aff;color:#fff;border:none;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer}
+.chat-input button:disabled{background:#d1d1d6}
+.chat-file{padding:8px 12px;background:#f2f2f7;border:none;border-radius:20px;font-size:16px;cursor:pointer}
+.chat-file:active{background:#d1d1d6}
+.chat-typing{font-size:12px;color:#8e8e93;padding:4px 0;font-style:italic}
+.no-key{text-align:center;padding:30px 20px;color:#8e8e93;font-size:13px;line-height:1.5}
+.no-key a{color:#007aff}
+
+/* SETTINGS */
+.setting{margin-bottom:16px}
+.setting label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.setting input{width:100%;padding:8px;border:1px solid #d1d1d6;border-radius:8px;font-size:13px}
+.setting input:focus{outline:none;border-color:#007aff}
+.setting p{font-size:11px;color:#aeaeb2;margin-top:4px}
+.setting button{margin-top:6px;padding:8px 16px;background:#007aff;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.danger-btn{background:#ff3b30!important;margin-top:20px}
+
 .toast{position:fixed;top:10px;right:10px;background:#1d1d1f;color:#fff;padding:5px 14px;border-radius:8px;font-size:12px;z-index:99;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
-.ex-alt{background:#f5f5f7}
-.copy-btn{width:100%;padding:9px;background:#34c759;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px}
-.copy-btn:active{background:#2da44e}
+
 @media(prefers-color-scheme:dark){
-.ex-alt{background:#2c2c2e!important}
 body{background:#000;color:#f5f5f7}
 .nav{background:#1c1c1e}
 .nav button{color:#8e8e93}
@@ -87,12 +127,18 @@ body{background:#000;color:#f5f5f7}
 .wnav button{background:#1c1c1e;border-color:#38383a;color:#f5f5f7}
 .wo-list{border-color:#38383a}
 .ex{border-color:#2c2c2e}
+.ex-alt{background:#2c2c2e!important}
 .ex input{background:#2c2c2e;border-color:#38383a;color:#f5f5f7}
 .status-btns button{background:#1c1c1e;border-color:#38383a}
 .bsel button{background:#2c2c2e}
 .wbox{background:#1c1c1e;border-color:#38383a}
 .wbox input{background:#2c2c2e;border-color:#38383a;color:#f5f5f7}
 .wbox button{background:#f5f5f7;color:#000}
+.chat-msg.ai{background:#2c2c2e;color:#f5f5f7}
+.chat-msg.system{background:#3a3000;color:#ffd60a}
+.chat-input input{background:#1c1c1e;border-color:#38383a;color:#f5f5f7}
+.chat-file{background:#2c2c2e}
+.setting input{background:#1c1c1e;border-color:#38383a;color:#f5f5f7}
 .toast{background:#f5f5f7;color:#000}
 }
 </style>
@@ -101,87 +147,223 @@ body{background:#000;color:#f5f5f7}
 <div class="app" id="app"></div>
 <div class="toast" id="toast"></div>
 <script>
-var BLOCKS = {
-  UPPER_A: {emoji:"\u{1F170}\uFE0F", name:"Upper A \u2014 Si\u0142a Max", hdr:"#dc2626", exercises:[
-    {id:"ua1",name:"Rozgrzewka: Wio\u015Blarz",info:"\u2014 \u00D7 5 min | Lekko",notes:"Rozgrzej plecy"},
-    {id:"ua2",name:"\u2605 Lat Pulldown",info:"3+1 \u00D7 5 | 55/test 57,5 kg",notes:"Tempo 2-0-2. Seria 4=TEST"},
-    {id:"ua3",name:"Wios\u0142owanie hantlem",info:"4 \u00D7 5/str. | 25 kg (22\u201327)",notes:"\u0141opatka \u015Bci\u0105gni\u0119ta"},
-    {id:"ua4",name:"Wyciskanie hantli",info:"4 \u00D7 5 | 20 kg (18\u201322)",notes:"\u0141okcie 45\u00B0"},
-    {id:"ua5",name:"Spacer Farmera",info:"3 \u00D7 50s | 24 kg",notes:"Brzuch napi\u0119ty"}
-  ]},
-  UPPER_B: {emoji:"\u{1F171}\uFE0F", name:"Upper B \u2014 Obj\u0119to\u015B\u0107", hdr:"#2563eb", exercises:[
-    {id:"ub1",name:"Rozgrzewka: Wio\u015Blarz",info:"\u2014 \u00D7 5 min | Lekko",notes:""},
-    {id:"ub2",name:"SS1a: Wyciskanie hantli",info:"3 \u00D7 10 | 15 kg (14\u201316)",notes:"\u2192 od razu SS1b"},
-    {id:"ub3",name:"SS1b: Lat Pulldown",info:"3 \u00D7 10 | 42,5 kg (40\u201345)",notes:"90s\u20132min po SS"},
-    {id:"ub4",name:"SS2a: Wios\u0142owanie",info:"3 \u00D7 10/str. | 20 kg (18\u201322)",notes:"\u2192 od razu SS2b"},
-    {id:"ub5",name:"SS2b: Rozpi\u0119tki",info:"3 \u00D7 12 | 9 kg (8\u201310)",notes:"2-3s opuszczanie"},
-    {id:"ub6",name:"Australian Pull-up",info:"4 \u00D7 8\u201310 | BW",notes:"Stopy na ziemi/\u0142awce"},
-    {id:"ub7",name:"Face Pull",info:"3 \u00D7 15 | Lekko",notes:"Zdrowie bark\u00F3w"}
-  ]},
-  UPPER_C: {emoji:"\u{1F172}", name:"Upper C \u2014 Technika", hdr:"#7c3aed", exercises:[
-    {id:"uc1",name:"LP ekscentryk (4s)",info:"4 \u00D7 6 | 45 kg (42\u201348)",notes:"4 sek opuszczanie!"},
-    {id:"uc2",name:"Scapular Pulldown",info:"3 \u00D7 8 | 30 kg (25\u201330)",notes:"Proste r\u0119ce, 2s hold"},
-    {id:"uc3",name:"Wios\u0142owanie odwr.",info:"3 \u00D7 10 | 20 kg (18\u201322)",notes:"Biceps + dolne trapezy"},
-    {id:"uc4",name:"M\u0142otki",info:"3 \u00D7 10 | 10\u201312 kg",notes:"Kontrola \u0142okci!"},
-    {id:"uc5",name:"Reverse Fly",info:"3 \u00D7 15 | 6\u20138 kg",notes:"Wolne tempo"},
-    {id:"uc6",name:"Zwis na czas",info:"3 \u00D7 MAX | BW",notes:"Notuj sekundy!"}
-  ]},
-  LEGS: {emoji:"\u{1F9B5}", name:"Nogi \u2014 Maintenance", hdr:"#d97706", exercises:[
-    {id:"lg1",name:"Rozgrzewka: Rower",info:"\u2014 \u00D7 5 min | Lekko",notes:""},
-    {id:"lg2",name:"RDL",info:"3 \u00D7 10 | 70 kg",notes:"BEZ progresji!"},
-    {id:"lg3",name:"Przysiad Zerchera",info:"3 \u00D7 10 | 50 kg",notes:"BEZ progresji!"},
-    {id:"lg4",name:"Wspi\u0119cia na palce",info:"3 \u00D7 15 | BW",notes:""},
-    {id:"lg5",name:"Plank boczny",info:"3 \u00D7 30s/str. | \u2014",notes:"Biodra nie opadaj\u0105"},
-    {id:"lg6",name:"Dead Bug",info:"3 \u00D7 8/str. | \u2014",notes:"Plecy na pod\u0142odze"}
-  ]},
-  INTERVALS: {emoji:"\u{1F3C3}\u200D\u2642\uFE0F", name:"Interwa\u0142y 5x3min", hdr:"#059669", exercises:[
-    {id:"in1",name:"Rozgrzewka trucht",info:"10 min | HR <130",notes:""},
-    {id:"in2",name:"Interwa\u0142 1",info:"3 min | HR 155-165 | >=165 spm",notes:""},
-    {id:"in3",name:"Odpoczynek 1",info:"2 min trucht | HR <130",notes:""},
-    {id:"in4",name:"Interwa\u0142 2",info:"3 min | HR 155-165",notes:""},
-    {id:"in5",name:"Odpoczynek 2",info:"2 min | HR <130",notes:""},
-    {id:"in6",name:"Interwa\u0142 3",info:"3 min | HR 155-165",notes:""},
-    {id:"in7",name:"Odpoczynek 3",info:"2 min | HR <130",notes:""},
-    {id:"in8",name:"Interwa\u0142 4",info:"3 min | HR 155-165",notes:""},
-    {id:"in9",name:"Odpoczynek 4",info:"2 min | HR <130",notes:""},
-    {id:"in10",name:"Interwa\u0142 5",info:"3 min | HR 155-165",notes:""},
-    {id:"in11",name:"Sch\u0142odzenie",info:"8 min | HR <130",notes:""}
-  ]},
-  LONG_RUN: {emoji:"\u{1F3C3}", name:"D\u0142ugie wybieganie 65min", hdr:"#0d9488", exercises:[
-    {id:"lr1",name:"Bieg Strefa 2",info:"65 min | HR 135-145 | >=160 spm",notes:""},
-    {id:"lr2",name:"Mikropauzy",info:"30s marszu co 15 min",notes:"Gdy HR >145"}
-  ]},
-  REST: {emoji:"\u{1F634}", name:"Rest", hdr:"#6b7280", exercises:[
-    {id:"re1",name:"Lekki rower LUB pe\u0142ny rest",info:"30-40 min | HR <120",notes:""}
-  ]}
+// ── BLOCKS ──
+var BLOCKS={
+UPPER_A:{emoji:"\u{1F170}\uFE0F",name:"Upper A \u2014 Si\u0142a Max",hdr:"#dc2626",exercises:[
+{id:"ua1",name:"Rozgrzewka: Wio\u015Blarz",info:"\u2014 \u00D7 5 min | Lekko",notes:"Rozgrzej plecy"},
+{id:"ua2",name:"\u2605 Lat Pulldown",info:"3+1 \u00D7 5 | 55/test 57,5 kg",notes:"Tempo 2-0-2. Seria 4=TEST"},
+{id:"ua3",name:"Wios\u0142owanie hantlem",info:"4 \u00D7 5/str. | 25 kg (22-27)",notes:"\u0141opatka \u015Bci\u0105gni\u0119ta"},
+{id:"ua4",name:"Wyciskanie hantli",info:"4 \u00D7 5 | 20 kg (18-22)",notes:"\u0141okcie 45\u00B0"},
+{id:"ua5",name:"Spacer Farmera",info:"3 \u00D7 50s | 24 kg",notes:"Brzuch napi\u0119ty"}]},
+UPPER_B:{emoji:"\u{1F171}\uFE0F",name:"Upper B \u2014 Obj\u0119to\u015B\u0107",hdr:"#2563eb",exercises:[
+{id:"ub1",name:"Rozgrzewka: Wio\u015Blarz",info:"\u2014 \u00D7 5 min | Lekko",notes:""},
+{id:"ub2",name:"SS1a: Wyciskanie hantli",info:"3 \u00D7 10 | 15 kg (14-16)",notes:"\u2192 od razu SS1b"},
+{id:"ub3",name:"SS1b: Lat Pulldown",info:"3 \u00D7 10 | 42,5 kg (40-45)",notes:"90s-2min po SS"},
+{id:"ub4",name:"SS2a: Wios\u0142owanie",info:"3 \u00D7 10/str. | 20 kg (18-22)",notes:"\u2192 od razu SS2b"},
+{id:"ub5",name:"SS2b: Rozpi\u0119tki",info:"3 \u00D7 12 | 9 kg (8-10)",notes:"2-3s opuszczanie"},
+{id:"ub6",name:"Australian Pull-up",info:"4 \u00D7 8-10 | BW",notes:"Stopy na ziemi/\u0142awce"},
+{id:"ub7",name:"Face Pull",info:"3 \u00D7 15 | Lekko",notes:"Zdrowie bark\u00F3w"}]},
+UPPER_C:{emoji:"\u{1F172}",name:"Upper C \u2014 Technika",hdr:"#7c3aed",exercises:[
+{id:"uc1",name:"LP ekscentryk (4s)",info:"4 \u00D7 6 | 45 kg (42-48)",notes:"4 sek opuszczanie!"},
+{id:"uc2",name:"Scapular Pulldown",info:"3 \u00D7 8 | 30 kg (25-30)",notes:"Proste r\u0119ce, 2s hold"},
+{id:"uc3",name:"Wios\u0142owanie odwr.",info:"3 \u00D7 10 | 20 kg (18-22)",notes:"Biceps + dolne trapezy"},
+{id:"uc4",name:"M\u0142otki",info:"3 \u00D7 10 | 10-12 kg",notes:"Kontrola \u0142okci!"},
+{id:"uc5",name:"Reverse Fly",info:"3 \u00D7 15 | 6-8 kg",notes:"Wolne tempo"},
+{id:"uc6",name:"Zwis na czas",info:"3 \u00D7 MAX | BW",notes:"Notuj sekundy!"}]},
+LEGS:{emoji:"\u{1F9B5}",name:"Nogi \u2014 Maintenance",hdr:"#d97706",exercises:[
+{id:"lg1",name:"Rozgrzewka: Rower",info:"\u2014 \u00D7 5 min | Lekko",notes:""},
+{id:"lg2",name:"RDL",info:"3 \u00D7 10 | 70 kg",notes:"BEZ progresji!"},
+{id:"lg3",name:"Przysiad Zerchera",info:"3 \u00D7 10 | 50 kg",notes:"BEZ progresji!"},
+{id:"lg4",name:"Wspi\u0119cia na palce",info:"3 \u00D7 15 | BW",notes:""},
+{id:"lg5",name:"Plank boczny",info:"3 \u00D7 30s/str. | \u2014",notes:"Biodra nie opadaj\u0105"},
+{id:"lg6",name:"Dead Bug",info:"3 \u00D7 8/str. | \u2014",notes:"Plecy na pod\u0142odze"}]},
+INTERVALS:{emoji:"\u{1F3C3}\u200D\u2642\uFE0F",name:"Interwa\u0142y 5x3min",hdr:"#059669",exercises:[
+{id:"in1",name:"Rozgrzewka trucht",info:"10 min | HR <130",notes:""},
+{id:"in2",name:"Interwa\u0142 1",info:"3 min | HR 155-165 | >=165 spm",notes:""},
+{id:"in3",name:"Odpoczynek 1",info:"2 min trucht | HR <130",notes:""},
+{id:"in4",name:"Interwa\u0142 2",info:"3 min | HR 155-165",notes:""},
+{id:"in5",name:"Odpoczynek 2",info:"2 min | HR <130",notes:""},
+{id:"in6",name:"Interwa\u0142 3",info:"3 min | HR 155-165",notes:""},
+{id:"in7",name:"Odpoczynek 3",info:"2 min | HR <130",notes:""},
+{id:"in8",name:"Interwa\u0142 4",info:"3 min | HR 155-165",notes:""},
+{id:"in9",name:"Odpoczynek 4",info:"2 min | HR <130",notes:""},
+{id:"in10",name:"Interwa\u0142 5",info:"3 min | HR 155-165",notes:""},
+{id:"in11",name:"Sch\u0142odzenie",info:"8 min | HR <130",notes:""}]},
+LONG_RUN:{emoji:"\u{1F3C3}",name:"D\u0142ugie wybieganie 65min",hdr:"#0d9488",exercises:[
+{id:"lr1",name:"Bieg Strefa 2",info:"65 min | HR 135-145 | >=160 spm",notes:""},
+{id:"lr2",name:"Mikropauzy",info:"30s marszu co 15 min",notes:"Gdy HR >145"}]},
+REST:{emoji:"\u{1F634}",name:"Rest",hdr:"#6b7280",exercises:[
+{id:"re1",name:"Lekki rower LUB pe\u0142ny rest",info:"30-40 min | HR <120",notes:""}]}
 };
 var BK=Object.keys(BLOCKS);
 var DN=["Nd","Pn","Wt","Sr","Czw","Pt","Sob"];
-var SEED={"plan": {"2026-02-01": "UPPER_A", "2026-02-03": "UPPER_A", "2026-02-05": "LEGS", "2026-02-06": "UPPER_A", "2026-02-09": "UPPER_A", "2026-02-10": "INTERVALS", "2026-02-11": "UPPER_B", "2026-02-12": "LEGS", "2026-02-13": "UPPER_C", "2026-02-14": "LONG_RUN", "2026-02-15": "REST", "2026-02-16": "UPPER_A", "2026-02-17": "INTERVALS", "2026-02-18": "REST", "2026-02-19": "LONG_RUN", "2026-02-20": "REST", "2026-02-21": "UPPER_B", "2026-02-22": "UPPER_C"}, "results": {"2026-02-01": {"ua1": "8 min orbitrek", "ua2": "10x35 / 10x40 / 10x40 / 10x45", "ua3": "10x18 / 10x20 / 10x20", "ua4": "10x10 / 10x12 / 10x14 / 10x16 (rampa)", "ua5": "1x24kg / 2x26kg (na reke)", "_status": "done"}, "2026-02-03": {"ua1": "4 min wiosłarz", "ua2": "10x45 / 10x50 / 10x50 / 10x55", "ua3": "10x20 / 10x22,5 / 10x22,5", "ua4": "10x15 / 10x17,5 / 10x17,5", "ua5": "25kg: 25s / 40s / 25s / 30s", "_status": "done"}, "2026-02-05": {"lg1": "Rower 6 min", "lg2": "3x10: 50 / 60 / 70 kg (rampa)", "lg3": "3x10: 30 / 40 / 50 kg (rampa)", "lg4": "", "lg5": "3x: 20s / 15s / 20s (Kopenhaga)", "lg6": "Zrobione + Russian Twist 3x 5kg", "_status": "done"}, "2026-02-06": {"ua1": "4 min wiosłarz + zwisy 30s/40s", "ua2": "4x8: 45/50/50/50 kg", "ua3": "4x8: 22,5 kg", "ua4": "3x8x20kg + 4. seria 5 powt.", "ua5": "24kg: 45s / 45s / 30s", "_status": "done"}, "2026-02-09": {"ua1": "4 min wiosłarz", "ua2": "50/55/55/55 x5. BRAK testu 57,5!", "ua3": "22,5/25/25/25 x5 (rampa)", "ua4": "20kg x4x5", "ua5": "BRAK - zwis 2x20s zamiast", "_status": "done"}, "2026-02-10": {"in1": "~8 min, HR 124>140, kad 153-156", "in2": "~2,5 min. HR 142>152. Kad 165-166", "in3": "~2 min. HR do 134", "in4": "~2,5 min. HR 137>153. Kad 163-172!", "in5": "~2 min. HR do 138", "in6": "~2,8 min. HR 146>159. Kad 165-172. BEST!", "in7": "", "in8": "POMINIETY (myslalem ze 3)", "in9": "", "in10": "POMINIETY (myslalem ze 3)", "in11": "~5 min. HR 138-141. Kad 150-152", "_status": "partial"}, "2026-02-11": {"ub1": "Zrobione", "ub2": "14kg x3x10 (brak 15kg)", "ub3": "40kg x3x10 (maszyna skok 40/45)", "ub4": "20kg x3x10", "ub5": "9kg x3x12 - rezerwa na 1 serie", "ub6": "Stopy na ziemi x4 serii", "ub7": "7,5kg x3x15", "_status": "done"}, "2026-02-12": {"_status": "skipped"}, "2026-02-13": {"uc1": "45kg x4x6", "uc2": "30kg x3x8", "uc3": "20kg x3x10", "uc4": "10kg x3x10", "uc5": "6kg x3x10 (plan 3x15!)", "uc6": "30s / 25s / 30s", "_status": "done", "_elbows": "0"}}, "weights": []};
-var SEEDV=5;
+
+// ── SEED DATA ──
+var SEED={"plan":{"2026-02-01":"UPPER_A","2026-02-03":"UPPER_A","2026-02-05":"LEGS","2026-02-06":"UPPER_A","2026-02-09":"UPPER_A","2026-02-10":"INTERVALS","2026-02-11":"UPPER_B","2026-02-12":"LEGS","2026-02-13":"UPPER_C","2026-02-14":"LONG_RUN","2026-02-15":"REST","2026-02-16":"UPPER_A","2026-02-17":"INTERVALS","2026-02-18":"REST","2026-02-19":"LONG_RUN","2026-02-20":"REST","2026-02-21":"UPPER_B","2026-02-22":"UPPER_C"},"results":{"2026-02-01":{"ua1":"8 min orbitrek","ua2":"10x35 / 10x40 / 10x40 / 10x45","ua3":"10x18 / 10x20 / 10x20","ua4":"10x10 / 10x12 / 10x14 / 10x16 (rampa)","ua5":"1x24kg / 2x26kg (na reke)","_status":"done"},"2026-02-03":{"ua1":"4 min wioslarz","ua2":"10x45 / 10x50 / 10x50 / 10x55","ua3":"10x20 / 10x22,5 / 10x22,5","ua4":"10x15 / 10x17,5 / 10x17,5","ua5":"25kg: 25s / 40s / 25s / 30s","_status":"done"},"2026-02-05":{"lg1":"Rower 6 min","lg2":"3x10: 50 / 60 / 70 kg (rampa)","lg3":"3x10: 30 / 40 / 50 kg (rampa)","lg4":"","lg5":"3x: 20s / 15s / 20s (Kopenhaga)","lg6":"Zrobione + Russian Twist 3x 5kg","_status":"done"},"2026-02-06":{"ua1":"4 min wioslarz + zwisy 30s/40s","ua2":"4x8: 45/50/50/50 kg","ua3":"4x8: 22,5 kg","ua4":"3x8x20kg + 4. seria 5 powt.","ua5":"24kg: 45s / 45s / 30s","_status":"done"},"2026-02-09":{"ua1":"4 min wioslarz","ua2":"50/55/55/55 x5. BRAK testu 57,5!","ua3":"22,5/25/25/25 x5 (rampa)","ua4":"20kg x4x5","ua5":"BRAK - zwis 2x20s zamiast","_status":"done"},"2026-02-10":{"in1":"~8 min, HR 124>140, kad 153-156","in2":"~2,5 min. HR 142>152. Kad 165-166","in3":"~2 min. HR do 134","in4":"~2,5 min. HR 137>153. Kad 163-172!","in5":"~2 min. HR do 138","in6":"~2,8 min. HR 146>159. Kad 165-172. BEST!","in7":"","in8":"POMINIETY (myslalem ze 3)","in9":"","in10":"POMINIETY (myslalem ze 3)","in11":"~5 min. HR 138-141. Kad 150-152","_status":"partial"},"2026-02-11":{"ub1":"Zrobione","ub2":"14kg x3x10 (brak 15kg)","ub3":"40kg x3x10 (maszyna skok 40/45)","ub4":"20kg x3x10","ub5":"9kg x3x12 - rezerwa na 1 serie","ub6":"Stopy na ziemi x4 serii","ub7":"7,5kg x3x15","_status":"done"},"2026-02-12":{"_status":"skipped"},"2026-02-13":{"uc1":"45kg x4x6","uc2":"30kg x3x8","uc3":"20kg x3x10","uc4":"10kg x3x10","uc5":"6kg x3x10 (plan 3x15!)","uc6":"30s / 25s / 30s","_status":"done","_elbows":"0"}},"weights":[]};
+var SEEDV=8;
+
+// ── STORAGE ──
 function loadData(){try{var v=localStorage.getItem("p85v");if(v&&parseInt(v)>=SEEDV){var s=localStorage.getItem("p85");if(s)return JSON.parse(s);}localStorage.setItem("p85",JSON.stringify(SEED));localStorage.setItem("p85v",String(SEEDV));return JSON.parse(JSON.stringify(SEED));}catch(e){return{plan:{},results:{},weights:[]};}}
 function saveData(d){try{localStorage.setItem("p85",JSON.stringify(d));}catch(e){}}
+function getKey(){return localStorage.getItem("p85key")||"";}
+function setKey(k){localStorage.setItem("p85key",k);}
+
 var DATA=loadData();
+var CHAT_HISTORY=[];
+try{var ch=localStorage.getItem("p85chat");if(ch)CHAT_HISTORY=JSON.parse(ch);}catch(e){}
+function saveChatHistory(){try{localStorage.setItem("p85chat",JSON.stringify(CHAT_HISTORY.slice(-50)));}catch(e){}}
+
+// ── UTILS ──
 function ds(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function pl(d){return String(d.getDate()).padStart(2,"0")+"."+String(d.getMonth()+1).padStart(2,"0")}
 function getMon(off){var d=new Date();d.setDate(d.getDate()+off*7);var day=d.getDay();d.setDate(d.getDate()-((day+6)%7));d.setHours(12,0,0,0);return d}
 var STATE={page:"week",sel:ds(new Date()),weekOff:0};
 var INPUTS={};
 function flash(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},1500)}
-function render(){
-  var app=document.getElementById("app");
-  app.innerHTML="";
-  var h=document.createElement("div");h.className="hdr";
-  h.innerHTML="<h1>&#127947; Treningi Adama</h1><p>Blok luty-marzec 2026</p>";
-  app.appendChild(h);
-  var nav=document.createElement("div");nav.className="nav";
-  var b1=document.createElement("button");b1.textContent="Tydzien";b1.className=STATE.page==="week"?"on":"";
-  b1.onclick=function(){STATE.page="week";render();};
-  var b2=document.createElement("button");b2.textContent="Trening";b2.className=STATE.page==="workout"?"on":"";
-  b2.onclick=function(){STATE.page="workout";render();};
-  nav.appendChild(b1);nav.appendChild(b2);app.appendChild(nav);
-  if(STATE.page==="week")renderWeek(app);else renderWorkout(app);
+
+// ── SYSTEM PROMPT FOR CLAUDE ──
+function buildSystemPrompt(){
+  var ctx="Jestes trenerem personalnym Adama w aplikacji Treningi Adama. Masz pelny dostep do jego danych treningowych.\n\n";
+  ctx+="PROFIL: Adam, 39 lat, 97 kg (cel: 85 kg), RHR ~50 bpm.\n";
+  ctx+="CELE: (1) Pierwszy podciagniecie, (2) 10K w 46 min do pazdziernika, (3) Redukcja do 85 kg.\n";
+  ctx+="AKTUALNE REKORDY: LP 55kg x5, RDL 70kg x10, Zercher 50kg x10.\n\n";
+  ctx+="SYSTEM TRENINGOWY: 7 modulowych blokow: Upper A (Sila Max), Upper B (Objetosc), Upper C (Technika), Legs (Maintenance), Intervals, Long Run, Rest.\n";
+  ctx+="ZASADY: Nigdy 2x Upper tego samego dnia. Min 48h miedzy Legs/Long Run. Min 48h miedzy Intervals/Long Run. Min 1 rest/tydzien.\n";
+  ctx+="PRIORYTETY (nie pomijac): Upper A, Intervals, Long Run. Mozna pominac: najpierw Legs, potem Upper C.\n\n";
+  ctx+="PROGRESJA LP: 3 serie robocze + 1 test (+2.5kg). Jesli test czysty -> nowe robocze.\n";
+  ctx+="PROGRESJA LP ekscentryk: +2.5kg LUB +1s co tydzien.\n";
+  ctx+="PROGRESJA Dlugie: +5min co tydzien.\n";
+  ctx+="PROGRESJA Interwaly: +1 powtorzenie co 2 tygodnie.\n\n";
+
+  ctx+="AKTUALNY PLAN I WYNIKI:\n";
+  var dates=Object.keys(DATA.plan).sort();
+  for(var i=0;i<dates.length;i++){
+    var d=dates[i];var bk=DATA.plan[d];var bl=BLOCKS[bk];
+    var dr=DATA.results[d]||{};
+    ctx+=d+" | "+bl.emoji+" "+bl.name;
+    if(dr._status)ctx+=" | Status: "+dr._status;
+    ctx+="\n";
+    if(bl.exercises){
+      for(var j=0;j<bl.exercises.length;j++){
+        var ex=bl.exercises[j];
+        if(dr[ex.id])ctx+="  "+ex.name+": "+dr[ex.id]+"\n";
+      }
+    }
+    if(dr._elbows)ctx+="  Lokcie: "+dr._elbows+"/10\n";
+  }
+
+  ctx+="\nWaga: "+(DATA.weights.length>0?DATA.weights.map(function(w){return w.date+": "+w.kg+"kg";}).join(", "):"brak danych")+"\n\n";
+
+  ctx+="INSTRUKCJE:\n";
+  ctx+="- Odpowiadaj po polsku, krotko i konkretnie jak trener.\n";
+  ctx+="- Mozesz aktualizowac plan treningowy. Gdy chcesz zmienic plan, na KONCU wiadomosci dodaj blok:\n";
+  ctx+="[PLAN_UPDATE]\n{\"YYYY-MM-DD\":\"BLOCK_ID\",...}\n[/PLAN_UPDATE]\n";
+  ctx+="Dostepne BLOCK_ID: UPPER_A, UPPER_B, UPPER_C, LEGS, INTERVALS, LONG_RUN, REST\n";
+  ctx+="- Uzytkownik moze Cie prosic o zaplanowanie treningow, analize wynikow, porady techniczne.\n";
+  ctx+="- Uzytkownik moze wgrac plik TCX z biegu. Dostaniesz sparsowane dane: dystans, czas, tempo, HR, kadencje, splity.\n";
+  ctx+="- Analizuj biegi pod katem celow: tempo docelowe 4:36/km (10K w 46 min), HR 135-145 (dlugie) lub 155-165 (interwaly), kadencja >=160 (dlugie) >=165 (interwaly).\n";
+  ctx+="- Zwracaj uwage na HR drift (wzrost HR przy stalym tempie = zmeczenie), spadek kadencji, zbyt szybki start.\n";
+  ctx+="- Badz motywujacy ale szczery. Jesli cos jest zle, powiedz.\n";
+  return ctx;
 }
+
+// ── CLAUDE API ──
+async function askClaude(userMsg){
+  var key=getKey();
+  if(!key)return{ok:false,text:"Brak klucza API. Ustaw go w zakladce Ustawienia."};
+  try{
+    var msgs=CHAT_HISTORY.slice(-10).map(function(m){return{role:m.role,content:m.text};});
+    msgs.push({role:"user",content:userMsg});
+    var res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1500,system:buildSystemPrompt(),messages:msgs})
+    });
+    if(!res.ok){var err=await res.text();return{ok:false,text:"Blad API: "+res.status+". "+err};}
+    var data=await res.json();
+    var text=data.content.map(function(c){return c.text||"";}).join("");
+    // Check for plan updates
+    var planMatch=text.match(/\[PLAN_UPDATE\]\s*(\{[\s\S]*?\})\s*\[\/PLAN_UPDATE\]/);
+    if(planMatch){
+      try{
+        var updates=JSON.parse(planMatch[1]);
+        for(var d in updates){
+          if(updates.hasOwnProperty(d)&&BLOCKS[updates[d]]){
+            DATA.plan[d]=updates[d];
+          }
+        }
+        saveData(DATA);
+        text=text.replace(/\[PLAN_UPDATE\][\s\S]*?\[\/PLAN_UPDATE\]/,"").trim();
+        text+="\n\n\u2705 Plan zaktualizowany!";
+      }catch(e){}
+    }
+    return{ok:true,text:text};
+  }catch(e){
+    return{ok:false,text:"Blad polaczenia: "+e.message};
+  }
+}
+
+// ── RENDER ──
+function render(){
+  var app=document.getElementById("app");app.innerHTML="";
+  // Header
+  var h=document.createElement("div");h.className="hdr";
+  h.innerHTML="<h1>&#127947; Treningi Adama</h1><p>Projekt 85 kg | Blok luty-marzec 2026</p>";
+  app.appendChild(h);
+  // Today banner
+  renderBanner(app);
+  // Nav
+  var nav=document.createElement("div");nav.className="nav";
+  var tabs=[{id:"week",l:"Tydzien"},{id:"workout",l:"Trening"},{id:"chat",l:"Chat"},{id:"settings",l:"\u2699\uFE0F"}];
+  for(var i=0;i<tabs.length;i++){
+    var b=document.createElement("button");b.textContent=tabs[i].l;
+    b.className=STATE.page===tabs[i].id?"on":"";
+    b.setAttribute("data-p",tabs[i].id);
+    b.onclick=function(){STATE.page=this.getAttribute("data-p");render();};
+    nav.appendChild(b);
+  }
+  app.appendChild(nav);
+  if(STATE.page==="week")renderWeek(app);
+  else if(STATE.page==="workout")renderWorkout(app);
+  else if(STATE.page==="chat")renderChat(app);
+  else if(STATE.page==="settings")renderSettings(app);
+}
+
+function renderBanner(app){
+  var today=ds(new Date());var bk=DATA.plan[today];var block=bk?BLOCKS[bk]:null;
+  var div=document.createElement("div");div.className="banner";
+  if(block){
+    div.style.background="linear-gradient(135deg,"+block.hdr+","+block.hdr+"cc)";
+    var dr=DATA.results[today]||{};
+    var t=document.createElement("div");t.className="banner-title";
+    t.textContent="Dzis: "+block.emoji+" "+block.name;
+    div.appendChild(t);
+    if(dr._status==="done"){
+      var s=document.createElement("div");s.className="banner-sub";s.textContent="\u2705 Zrobione!";div.appendChild(s);
+    }else if(dr._status==="skipped"){
+      var s=document.createElement("div");s.className="banner-sub";s.textContent="\u274C Pominiete";div.appendChild(s);
+    }else{
+      // Show key exercise hint
+      var hint="";
+      if(bk==="UPPER_A")hint="\u2605 Test LP 57,5 kg!";
+      else if(bk==="INTERVALS")hint="5x3min | HR 155-165 | Kadencja >=165 spm";
+      else if(bk==="LONG_RUN")hint="65 min | HR 135-145 | Kadencja >=160 spm";
+      else if(bk==="UPPER_B")hint="Superserie + Australian Pull-up";
+      else if(bk==="UPPER_C")hint="LP ekscentryk 4s + Zwisy MAX";
+      else if(bk==="LEGS")hint="RDL 70kg + Zercher 50kg (bez progresji)";
+      if(hint){var s=document.createElement("div");s.className="banner-sub";s.textContent=hint;div.appendChild(s);}
+    }
+    div.style.cursor="pointer";
+    div.onclick=function(){STATE.sel=today;STATE.page="workout";INPUTS=Object.assign({},DATA.results[today]||{});render();};
+  }else{
+    div.className="banner banner-rest";
+    var t=document.createElement("div");t.className="banner-title";t.textContent="\u{1F634} Dzis: brak zaplanowanego treningu";
+    div.appendChild(t);
+    var s=document.createElement("div");s.className="banner-sub";s.textContent="Odpoczywaj lub zaplanuj w chacie";div.appendChild(s);
+  }
+  app.appendChild(div);
+}
+
 function renderWeek(app){
   var week=[];var mon=getMon(STATE.weekOff);
   for(var i=0;i<7;i++){var dd=new Date(mon);dd.setDate(mon.getDate()+i);week.push(dd);}
@@ -191,7 +373,7 @@ function renderWeek(app){
   var next=document.createElement("button");next.innerHTML="&#9654;";next.onclick=function(){STATE.weekOff++;render();};
   var center=document.createElement("div");center.className="wnav-center";
   var thu=new Date(week[3]);var yr=new Date(thu.getFullYear(),0,1);var wkNum=Math.ceil((((thu-yr)/86400000)+yr.getDay()+1)/7);
-var lb=document.createElement("b");lb.textContent="Tydz. "+wkNum+" | "+pl(week[0])+" - "+pl(week[6]);center.appendChild(lb);
+  var lb=document.createElement("b");lb.textContent="Tydz. "+wkNum+" | "+pl(week[0])+" - "+pl(week[6]);center.appendChild(lb);
   if(STATE.weekOff!==0){var tb=document.createElement("button");tb.textContent="dzis";tb.onclick=function(){STATE.weekOff=0;render();};center.appendChild(tb);}
   wnav.appendChild(prev);wnav.appendChild(center);wnav.appendChild(next);app.appendChild(wnav);
   for(var i=0;i<7;i++){
@@ -214,6 +396,7 @@ var lb=document.createElement("b");lb.textContent="Tydz. "+wkNum+" | "+pl(week[0
     app.appendChild(div);
   }
 }
+
 function renderWorkout(app){
   var sel=STATE.sel;var sd=new Date(sel+"T12:00:00");var bk=DATA.plan[sel];var block=bk?BLOCKS[bk]:null;
   var back=document.createElement("button");back.className="back";back.innerHTML="&#8592; Powrot";
@@ -265,11 +448,10 @@ function renderWorkout(app){
     copy.onclick=function(){
       var bl=BLOCKS[DATA.plan[sel]];if(!bl)return;
       var txt=DN[sd.getDay()]+" "+pl(sd)+" | "+bl.emoji+" "+bl.name+"\n";
-      var exs=bl.exercises;
-      for(var ci=0;ci<exs.length;ci++){var val=INPUTS[exs[ci].id];if(val)txt+=exs[ci].name+": "+val+"\n";}
+      for(var ci=0;ci<bl.exercises.length;ci++){var val=INPUTS[bl.exercises[ci].id];if(val)txt+=bl.exercises[ci].name+": "+val+"\n";}
       if(INPUTS._elbows)txt+="Lokcie: "+INPUTS._elbows+"/10\n";
       if(INPUTS._status)txt+="Status: "+INPUTS._status+"\n";
-      if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){flash("Skopiowano!");});}else{prompt("Skopiuj tekst:",txt);}
+      if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){flash("Skopiowano!");});}else{prompt("Skopiuj:",txt);}
     };
     app.appendChild(copy);
   }else{
@@ -285,6 +467,236 @@ function renderWorkout(app){
   if(DATA.weights&&DATA.weights.length>0){var hist=document.createElement("div");hist.className="wbox-hist";hist.textContent=DATA.weights.slice(-5).map(function(w){return w.date.slice(5)+": "+w.kg+"kg";}).join(" > ");wbox.appendChild(hist);}
   app.appendChild(wbox);
 }
+
+// ── TCX PARSER ──
+function parseTCX(xmlText){
+  var parser=new DOMParser();
+  var doc=parser.parseFromString(xmlText,"text/xml");
+  var tps=doc.getElementsByTagName("Trackpoint");
+  if(tps.length===0)return null;
+
+  var points=[];var totalDist=0;var hrs=[];var cads=[];var startTime=null;var endTime=null;
+
+  for(var i=0;i<tps.length;i++){
+    var tp=tps[i];
+    var timeEl=tp.getElementsByTagName("Time")[0];
+    var distEl=tp.getElementsByTagName("DistanceMeters")[0];
+    var hrEl=tp.getElementsByTagName("HeartRateBpm")[0];
+    var cadEl=tp.getElementsByTagName("Cadence")[0];
+    // Also check RunCadence in extensions
+    var rcEls=tp.getElementsByTagName("ns3:RunCadence");
+    if(rcEls.length===0)rcEls=tp.getElementsByTagName("RunCadence");
+
+    var t=timeEl?new Date(timeEl.textContent):null;
+    var d=distEl?parseFloat(distEl.textContent):0;
+    var hr=hrEl?parseInt(hrEl.getElementsByTagName("Value")[0].textContent):0;
+    var cad=cadEl?parseInt(cadEl.textContent)*2:0; // bike cadence
+    if(!cad&&rcEls.length>0)cad=parseInt(rcEls[0].textContent)*2; // run cadence (steps/min)
+
+    if(t&&!startTime)startTime=t;
+    if(t)endTime=t;
+    if(d>totalDist)totalDist=d;
+    if(hr>0)hrs.push(hr);
+    if(cad>0)cads.push(cad);
+    points.push({time:t,dist:d,hr:hr,cad:cad});
+  }
+
+  if(!startTime||!endTime)return null;
+  var totalSec=(endTime-startTime)/1000;
+  var totalMin=totalSec/60;
+  var distKm=totalDist/1000;
+  var avgPace=distKm>0?totalMin/distKm:0;
+  var avgHR=hrs.length>0?Math.round(hrs.reduce(function(a,b){return a+b;},0)/hrs.length):0;
+  var maxHR=hrs.length>0?Math.max.apply(null,hrs):0;
+  var avgCad=cads.length>0?Math.round(cads.reduce(function(a,b){return a+b;},0)/cads.length):0;
+
+  // Splits per km
+  var splits=[];var kmMark=1;
+  var lastKmTime=startTime;
+  for(var i=0;i<points.length;i++){
+    if(points[i].dist/1000>=kmMark){
+      var splitSec=(points[i].time-lastKmTime)/1000;
+      var splitMin=Math.floor(splitSec/60);
+      var splitS=Math.round(splitSec%60);
+      // HR range for this km
+      var kmHrs=[];var kmCads=[];
+      for(var j=0;j<points.length;j++){
+        if(points[j].dist/1000>=(kmMark-1)&&points[j].dist/1000<=kmMark){
+          if(points[j].hr>0)kmHrs.push(points[j].hr);
+          if(points[j].cad>0)kmCads.push(points[j].cad);
+        }
+      }
+      var kmAvgHR=kmHrs.length>0?Math.round(kmHrs.reduce(function(a,b){return a+b;},0)/kmHrs.length):0;
+      var kmAvgCad=kmCads.length>0?Math.round(kmCads.reduce(function(a,b){return a+b;},0)/kmCads.length):0;
+      splits.push({km:kmMark,pace:splitMin+":"+String(splitS).padStart(2,"0"),hr:kmAvgHR,cad:kmAvgCad});
+      lastKmTime=points[i].time;
+      kmMark++;
+    }
+  }
+
+  var paceMin=Math.floor(avgPace);
+  var paceSec=Math.round((avgPace-paceMin)*60);
+  var durMin=Math.floor(totalMin);
+  var durSec=Math.round(totalSec%60);
+
+  var summary="ANALIZA BIEGU (TCX)\n";
+  summary+="Dystans: "+distKm.toFixed(2)+" km\n";
+  summary+="Czas: "+durMin+"min "+durSec+"s\n";
+  summary+="Tempo sr.: "+paceMin+":"+String(paceSec).padStart(2,"0")+"/km\n";
+  summary+="HR sr./max: "+avgHR+"/"+maxHR+" bpm\n";
+  summary+="Kadencja sr.: "+avgCad+" spm\n\n";
+  summary+="SPLITY:\n";
+  for(var i=0;i<splits.length;i++){
+    summary+="km"+splits[i].km+": "+splits[i].pace+"/km | HR "+splits[i].hr+" | Kad "+splits[i].cad+"\n";
+  }
+  return summary;
+}
+
+function handleTCXUpload(file){
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var text=e.target.result;
+    var summary=parseTCX(text);
+    if(!summary){flash("Blad parsowania TCX");return;}
+
+    // Show in chat as user message
+    var msgsDiv=document.getElementById("chatMsgs");
+    var um=document.createElement("div");um.className="chat-msg user";um.textContent="[Wgrany plik: "+file.name+"]\n"+summary;
+    msgsDiv.appendChild(um);
+    msgsDiv.scrollTop=msgsDiv.scrollHeight;
+
+    CHAT_HISTORY.push({role:"user",text:"Oto dane z mojego biegu. Przeanalizuj je.\n\n"+summary});
+    saveChatHistory();
+
+    // Auto-send to Claude for analysis
+    document.getElementById("chatTyping").style.display="block";
+    document.getElementById("chatSend").disabled=true;
+
+    askClaude("Oto dane z mojego biegu. Przeanalizuj wyniki, porownaj z celami (tempo, HR, kadencja) i daj feedback.\n\n"+summary).then(function(result){
+      document.getElementById("chatTyping").style.display="none";
+      document.getElementById("chatSend").disabled=false;
+      CHAT_HISTORY.push({role:"assistant",text:result.text});
+      saveChatHistory();
+      var am=document.createElement("div");am.className="chat-msg ai";am.textContent=result.text;
+      msgsDiv.appendChild(am);
+      msgsDiv.scrollTop=msgsDiv.scrollHeight;
+    });
+  };
+  reader.readAsText(file);
+}
+
+// ── CHAT ──
+function renderChat(app){
+  var key=getKey();
+  if(!key){
+    var nk=document.createElement("div");nk.className="no-key";
+    nk.innerHTML="<p><b>Chat z trenerem AI</b></p><p style='margin-top:8px'>Aby korzystac z chatu, potrzebujesz klucz API Anthropic.</p><p style='margin-top:8px'>1. Wejdz na <a href='https://console.anthropic.com' target='_blank'>console.anthropic.com</a><br>2. Utworz klucz API<br>3. Wklej go w zakladce \u2699\uFE0F Ustawienia</p>";
+    app.appendChild(nk);return;
+  }
+
+  var box=document.createElement("div");box.className="chat-box";
+  var msgs=document.createElement("div");msgs.className="chat-msgs";msgs.id="chatMsgs";
+
+  // Render history
+  for(var i=0;i<CHAT_HISTORY.length;i++){
+    var m=document.createElement("div");
+    m.className="chat-msg "+(CHAT_HISTORY[i].role==="user"?"user":"ai");
+    m.textContent=CHAT_HISTORY[i].text;
+    msgs.appendChild(m);
+  }
+
+  if(CHAT_HISTORY.length===0){
+    var welcome=document.createElement("div");welcome.className="chat-msg system";
+    welcome.textContent="Hej Adam! Jestem Twoim trenerem AI. Mam pelny wglad w Twoj plan i wyniki. Pytaj o analize, progresy, lub poproszenie o zaplanowanie treningow.";
+    msgs.appendChild(welcome);
+  }
+
+  box.appendChild(msgs);
+
+  var typing=document.createElement("div");typing.className="chat-typing";typing.id="chatTyping";typing.style.display="none";
+  typing.textContent="Trener pisze...";
+  box.appendChild(typing);
+
+  var inputRow=document.createElement("div");inputRow.className="chat-input";
+  var fileBtn=document.createElement("button");fileBtn.className="chat-file";fileBtn.textContent="\u{1F4CE}";fileBtn.title="Wgraj TCX/GPX";
+  var fileInp=document.createElement("input");fileInp.type="file";fileInp.accept=".tcx,.gpx,.xml";fileInp.style.display="none";
+  fileInp.onchange=function(){if(this.files[0])handleTCXUpload(this.files[0]);this.value="";};
+  fileBtn.onclick=function(){fileInp.click();};
+  var input=document.createElement("input");input.id="chatInput";input.placeholder="Napisz do trenera...";
+  input.addEventListener("keydown",function(e){if(e.key==="Enter")sendChat();});
+  var sendBtn=document.createElement("button");sendBtn.id="chatSend";sendBtn.textContent="Wyslij";
+  sendBtn.onclick=sendChat;
+  inputRow.appendChild(fileBtn);inputRow.appendChild(fileInp);inputRow.appendChild(input);inputRow.appendChild(sendBtn);
+  box.appendChild(inputRow);
+  app.appendChild(box);
+
+  setTimeout(function(){var m=document.getElementById("chatMsgs");if(m)m.scrollTop=m.scrollHeight;},50);
+}
+
+async function sendChat(){
+  var input=document.getElementById("chatInput");
+  var msg=input.value.trim();
+  if(!msg)return;
+  input.value="";
+
+  // Add user message
+  CHAT_HISTORY.push({role:"user",text:msg});
+  var msgsDiv=document.getElementById("chatMsgs");
+  var um=document.createElement("div");um.className="chat-msg user";um.textContent=msg;
+  msgsDiv.appendChild(um);
+  msgsDiv.scrollTop=msgsDiv.scrollHeight;
+
+  // Show typing
+  document.getElementById("chatTyping").style.display="block";
+  document.getElementById("chatSend").disabled=true;
+
+  var result=await askClaude(msg);
+
+  document.getElementById("chatTyping").style.display="none";
+  document.getElementById("chatSend").disabled=false;
+
+  var aiText=result.text;
+  CHAT_HISTORY.push({role:"assistant",text:aiText});
+  saveChatHistory();
+
+  var am=document.createElement("div");am.className="chat-msg ai";am.textContent=aiText;
+  msgsDiv.appendChild(am);
+  msgsDiv.scrollTop=msgsDiv.scrollHeight;
+
+  // If plan was updated, refresh banner
+  if(aiText.indexOf("Plan zaktualizowany")!==-1){
+    setTimeout(render,1500);
+  }
+}
+
+// ── SETTINGS ──
+function renderSettings(app){
+  var s1=document.createElement("div");s1.className="setting";
+  var l1=document.createElement("label");l1.textContent="Klucz API Anthropic";s1.appendChild(l1);
+  var i1=document.createElement("input");i1.type="password";i1.id="apiKeyInput";i1.value=getKey();i1.placeholder="sk-ant-...";s1.appendChild(i1);
+  var p1=document.createElement("p");p1.textContent="Klucz jest przechowywany tylko lokalnie na Twoim urzadzeniu.";s1.appendChild(p1);
+  var b1=document.createElement("button");b1.textContent="Zapisz klucz";
+  b1.onclick=function(){var v=document.getElementById("apiKeyInput").value.trim();setKey(v);flash("Klucz zapisany!");};
+  s1.appendChild(b1);
+  app.appendChild(s1);
+
+  var s2=document.createElement("div");s2.className="setting";
+  var l2=document.createElement("label");l2.textContent="Dane treningowe";s2.appendChild(l2);
+  var p2=document.createElement("p");
+  var planCount=Object.keys(DATA.plan).length;
+  var resCount=Object.keys(DATA.results).length;
+  p2.textContent="Zaplanowanych sesji: "+planCount+" | Zapisanych wynikow: "+resCount+" | Pomiarow wagi: "+DATA.weights.length;
+  s2.appendChild(p2);
+  app.appendChild(s2);
+
+  var s3=document.createElement("div");s3.className="setting";
+  var b3=document.createElement("button");b3.className="danger-btn";b3.textContent="Wyczysc historie chatu";
+  b3.onclick=function(){if(confirm("Na pewno?")){CHAT_HISTORY=[];saveChatHistory();flash("Wyczyszczono!");render();}};
+  s3.appendChild(b3);
+  app.appendChild(s3);
+}
+
+// ── START ──
 render();
 </script>
 </body>
