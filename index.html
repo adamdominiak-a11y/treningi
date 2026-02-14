@@ -2,6 +2,9 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -70,7 +73,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#f
 .empty-block{text-align:center;padding:30px;color:#d1d1d6;font-size:14px}
 .toast{position:fixed;top:10px;right:10px;background:#1d1d1f;color:#fff;padding:5px 14px;border-radius:8px;font-size:12px;z-index:99;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
+.ex-alt{background:#f5f5f7}
+.copy-btn{width:100%;padding:9px;background:#34c759;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px}
+.copy-btn:active{background:#2da44e}
 @media(prefers-color-scheme:dark){
+.ex-alt{background:#2c2c2e!important}
 body{background:#000;color:#f5f5f7}
 .nav{background:#1c1c1e}
 .nav button{color:#8e8e93}
@@ -151,7 +158,7 @@ var BLOCKS = {
 var BK=Object.keys(BLOCKS);
 var DN=["Nd","Pn","Wt","Sr","Czw","Pt","Sob"];
 var SEED={"plan": {"2026-02-01": "UPPER_A", "2026-02-03": "UPPER_A", "2026-02-05": "LEGS", "2026-02-06": "UPPER_A", "2026-02-09": "UPPER_A", "2026-02-10": "INTERVALS", "2026-02-11": "UPPER_B", "2026-02-12": "LEGS", "2026-02-13": "UPPER_C", "2026-02-14": "LONG_RUN", "2026-02-15": "REST", "2026-02-16": "UPPER_A", "2026-02-17": "INTERVALS", "2026-02-18": "REST", "2026-02-19": "LONG_RUN", "2026-02-20": "REST", "2026-02-21": "UPPER_B", "2026-02-22": "UPPER_C"}, "results": {"2026-02-01": {"ua1": "8 min orbitrek", "ua2": "10x35 / 10x40 / 10x40 / 10x45", "ua3": "10x18 / 10x20 / 10x20", "ua4": "10x10 / 10x12 / 10x14 / 10x16 (rampa)", "ua5": "1x24kg / 2x26kg (na reke)", "_status": "done"}, "2026-02-03": {"ua1": "4 min wiosłarz", "ua2": "10x45 / 10x50 / 10x50 / 10x55", "ua3": "10x20 / 10x22,5 / 10x22,5", "ua4": "10x15 / 10x17,5 / 10x17,5", "ua5": "25kg: 25s / 40s / 25s / 30s", "_status": "done"}, "2026-02-05": {"lg1": "Rower 6 min", "lg2": "3x10: 50 / 60 / 70 kg (rampa)", "lg3": "3x10: 30 / 40 / 50 kg (rampa)", "lg4": "", "lg5": "3x: 20s / 15s / 20s (Kopenhaga)", "lg6": "Zrobione + Russian Twist 3x 5kg", "_status": "done"}, "2026-02-06": {"ua1": "4 min wiosłarz + zwisy 30s/40s", "ua2": "4x8: 45/50/50/50 kg", "ua3": "4x8: 22,5 kg", "ua4": "3x8x20kg + 4. seria 5 powt.", "ua5": "24kg: 45s / 45s / 30s", "_status": "done"}, "2026-02-09": {"ua1": "4 min wiosłarz", "ua2": "50/55/55/55 x5. BRAK testu 57,5!", "ua3": "22,5/25/25/25 x5 (rampa)", "ua4": "20kg x4x5", "ua5": "BRAK - zwis 2x20s zamiast", "_status": "done"}, "2026-02-10": {"in1": "~8 min, HR 124>140, kad 153-156", "in2": "~2,5 min. HR 142>152. Kad 165-166", "in3": "~2 min. HR do 134", "in4": "~2,5 min. HR 137>153. Kad 163-172!", "in5": "~2 min. HR do 138", "in6": "~2,8 min. HR 146>159. Kad 165-172. BEST!", "in7": "", "in8": "POMINIETY (myslalem ze 3)", "in9": "", "in10": "POMINIETY (myslalem ze 3)", "in11": "~5 min. HR 138-141. Kad 150-152", "_status": "partial"}, "2026-02-11": {"ub1": "Zrobione", "ub2": "14kg x3x10 (brak 15kg)", "ub3": "40kg x3x10 (maszyna skok 40/45)", "ub4": "20kg x3x10", "ub5": "9kg x3x12 - rezerwa na 1 serie", "ub6": "Stopy na ziemi x4 serii", "ub7": "7,5kg x3x15", "_status": "done"}, "2026-02-12": {"_status": "skipped"}, "2026-02-13": {"uc1": "45kg x4x6", "uc2": "30kg x3x8", "uc3": "20kg x3x10", "uc4": "10kg x3x10", "uc5": "6kg x3x10 (plan 3x15!)", "uc6": "30s / 25s / 30s", "_status": "done", "_elbows": "0"}}, "weights": []};
-var SEEDV=3;
+var SEEDV=5;
 function loadData(){try{var v=localStorage.getItem("p85v");if(v&&parseInt(v)>=SEEDV){var s=localStorage.getItem("p85");if(s)return JSON.parse(s);}localStorage.setItem("p85",JSON.stringify(SEED));localStorage.setItem("p85v",String(SEEDV));return JSON.parse(JSON.stringify(SEED));}catch(e){return{plan:{},results:{},weights:[]};}}
 function saveData(d){try{localStorage.setItem("p85",JSON.stringify(d));}catch(e){}}
 var DATA=loadData();
@@ -183,7 +190,8 @@ function renderWeek(app){
   var prev=document.createElement("button");prev.innerHTML="&#9664;";prev.onclick=function(){STATE.weekOff--;render();};
   var next=document.createElement("button");next.innerHTML="&#9654;";next.onclick=function(){STATE.weekOff++;render();};
   var center=document.createElement("div");center.className="wnav-center";
-  var lb=document.createElement("b");lb.textContent=pl(week[0])+" - "+pl(week[6]);center.appendChild(lb);
+  var thu=new Date(week[3]);var yr=new Date(thu.getFullYear(),0,1);var wkNum=Math.ceil((((thu-yr)/86400000)+yr.getDay()+1)/7);
+var lb=document.createElement("b");lb.textContent="Tydz. "+wkNum+" | "+pl(week[0])+" - "+pl(week[6]);center.appendChild(lb);
   if(STATE.weekOff!==0){var tb=document.createElement("button");tb.textContent="dzis";tb.onclick=function(){STATE.weekOff=0;render();};center.appendChild(tb);}
   wnav.appendChild(prev);wnav.appendChild(center);wnav.appendChild(next);app.appendChild(wnav);
   for(var i=0;i<7;i++){
@@ -225,7 +233,7 @@ function renderWorkout(app){
     var list=document.createElement("div");list.className="wo-list";
     for(var j=0;j<block.exercises.length;j++){
       var ex=block.exercises[j];var exDiv=document.createElement("div");exDiv.className="ex";
-      if(j%2===1)exDiv.style.background="#f9f9fb";
+      if(j%2===1)exDiv.className="ex ex-alt";
       var nm=document.createElement("div");nm.className="ex-name";nm.textContent=ex.name;exDiv.appendChild(nm);
       var inf=document.createElement("div");inf.className="ex-info";inf.textContent=ex.info;exDiv.appendChild(inf);
       if(ex.notes){var nt=document.createElement("div");nt.className="ex-notes";nt.textContent=ex.notes;exDiv.appendChild(nt);}
@@ -253,6 +261,17 @@ function renderWorkout(app){
     var save=document.createElement("button");save.className="save-btn";save.textContent="Zapisz wyniki";
     save.onclick=function(){DATA.results[sel]=Object.assign({},INPUTS);saveData(DATA);flash("Zapisano!");};
     app.appendChild(save);
+    var copy=document.createElement("button");copy.className="copy-btn";copy.textContent="Kopiuj wyniki do chatu";
+    copy.onclick=function(){
+      var bl=BLOCKS[DATA.plan[sel]];if(!bl)return;
+      var txt=DN[sd.getDay()]+" "+pl(sd)+" | "+bl.emoji+" "+bl.name+"\n";
+      var exs=bl.exercises;
+      for(var ci=0;ci<exs.length;ci++){var val=INPUTS[exs[ci].id];if(val)txt+=exs[ci].name+": "+val+"\n";}
+      if(INPUTS._elbows)txt+="Lokcie: "+INPUTS._elbows+"/10\n";
+      if(INPUTS._status)txt+="Status: "+INPUTS._status+"\n";
+      if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){flash("Skopiowano!");});}else{prompt("Skopiuj tekst:",txt);}
+    };
+    app.appendChild(copy);
   }else{
     var emp=document.createElement("div");emp.className="empty-block";emp.textContent="Wybierz blok powyzej";app.appendChild(emp);
   }
