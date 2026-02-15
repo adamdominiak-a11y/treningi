@@ -200,11 +200,34 @@ var DN=["Nd","Pn","Wt","Sr","Czw","Pt","Sob"];
 
 // ── SEED DATA ──
 var SEED={"plan":{"2026-02-01":"UPPER_A","2026-02-03":"UPPER_A","2026-02-05":"LEGS","2026-02-06":"UPPER_A","2026-02-09":"UPPER_A","2026-02-10":"INTERVALS","2026-02-11":"UPPER_B","2026-02-12":"LEGS","2026-02-13":"UPPER_C","2026-02-14":"LONG_RUN","2026-02-15":"REST","2026-02-16":"UPPER_A","2026-02-17":"INTERVALS","2026-02-18":"REST","2026-02-19":"LONG_RUN","2026-02-20":"REST","2026-02-21":"UPPER_B","2026-02-22":"UPPER_C"},"results":{"2026-02-01":{"ua1":"8 min orbitrek","ua2":"10x35 / 10x40 / 10x40 / 10x45","ua3":"10x18 / 10x20 / 10x20","ua4":"10x10 / 10x12 / 10x14 / 10x16 (rampa)","ua5":"1x24kg / 2x26kg (na reke)","_status":"done"},"2026-02-03":{"ua1":"4 min wioslarz","ua2":"10x45 / 10x50 / 10x50 / 10x55","ua3":"10x20 / 10x22,5 / 10x22,5","ua4":"10x15 / 10x17,5 / 10x17,5","ua5":"25kg: 25s / 40s / 25s / 30s","_status":"done"},"2026-02-05":{"lg1":"Rower 6 min","lg2":"3x10: 50 / 60 / 70 kg (rampa)","lg3":"3x10: 30 / 40 / 50 kg (rampa)","lg4":"","lg5":"3x: 20s / 15s / 20s (Kopenhaga)","lg6":"Zrobione + Russian Twist 3x 5kg","_status":"done"},"2026-02-06":{"ua1":"4 min wioslarz + zwisy 30s/40s","ua2":"4x8: 45/50/50/50 kg","ua3":"4x8: 22,5 kg","ua4":"3x8x20kg + 4. seria 5 powt.","ua5":"24kg: 45s / 45s / 30s","_status":"done"},"2026-02-09":{"ua1":"4 min wioslarz","ua2":"50/55/55/55 x5. BRAK testu 57,5!","ua3":"22,5/25/25/25 x5 (rampa)","ua4":"20kg x4x5","ua5":"BRAK - zwis 2x20s zamiast","_status":"done"},"2026-02-10":{"in1":"~8 min, HR 124>140, kad 153-156","in2":"~2,5 min. HR 142>152. Kad 165-166","in3":"~2 min. HR do 134","in4":"~2,5 min. HR 137>153. Kad 163-172!","in5":"~2 min. HR do 138","in6":"~2,8 min. HR 146>159. Kad 165-172. BEST!","in7":"","in8":"POMINIETY (myslalem ze 3)","in9":"","in10":"POMINIETY (myslalem ze 3)","in11":"~5 min. HR 138-141. Kad 150-152","_status":"partial"},"2026-02-11":{"ub1":"Zrobione","ub2":"14kg x3x10 (brak 15kg)","ub3":"40kg x3x10 (maszyna skok 40/45)","ub4":"20kg x3x10","ub5":"9kg x3x12 - rezerwa na 1 serie","ub6":"Stopy na ziemi x4 serii","ub7":"7,5kg x3x15","_status":"done"},"2026-02-12":{"_status":"skipped"},"2026-02-13":{"uc1":"45kg x4x6","uc2":"30kg x3x8","uc3":"20kg x3x10","uc4":"10kg x3x10","uc5":"6kg x3x10 (plan 3x15!)","uc6":"30s / 25s / 30s","_status":"done","_elbows":"0"}},"weights":[]};
-var SEEDV=8;
+var SEEDV=10;
 
 // ── STORAGE ──
-function loadData(){try{var v=localStorage.getItem("p85v");if(v&&parseInt(v)>=SEEDV){var s=localStorage.getItem("p85");if(s)return JSON.parse(s);}localStorage.setItem("p85",JSON.stringify(SEED));localStorage.setItem("p85v",String(SEEDV));return JSON.parse(JSON.stringify(SEED));}catch(e){return{plan:{},results:{},weights:[]};}}
-function saveData(d){try{localStorage.setItem("p85",JSON.stringify(d));}catch(e){}}
+function loadData(){
+  try{
+    var existing=null;
+    var s=localStorage.getItem("p85");
+    if(s)existing=JSON.parse(s);
+    var v=localStorage.getItem("p85v");
+    // If same version, just return existing
+    if(v&&parseInt(v)>=SEEDV&&existing)return existing;
+    // New version: MERGE seed + existing. User data wins conflicts.
+    var merged={plan:{},results:{},weights:[]};
+    // Layer 1: SEED (base)
+    var sk=Object.keys(SEED.plan||{});for(var i=0;i<sk.length;i++)merged.plan[sk[i]]=SEED.plan[sk[i]];
+    var sr=Object.keys(SEED.results||{});for(var i=0;i<sr.length;i++)merged.results[sr[i]]=SEED.results[sr[i]];
+    merged.weights=(SEED.weights||[]).slice();
+    // Layer 2: existing user data (overwrites seed)
+    if(existing){
+      var ek=Object.keys(existing.plan||{});for(var i=0;i<ek.length;i++)merged.plan[ek[i]]=existing.plan[ek[i]];
+      var er=Object.keys(existing.results||{});for(var i=0;i<er.length;i++)merged.results[er[i]]=existing.results[er[i]];
+      if(existing.weights&&existing.weights.length>0)merged.weights=existing.weights;
+    }
+    localStorage.setItem("p85",JSON.stringify(merged));
+    localStorage.setItem("p85v",String(SEEDV));
+    return merged;
+  }catch(e){return{plan:{},results:{},weights:[]};}
+}function saveData(d){try{localStorage.setItem("p85",JSON.stringify(d));}catch(e){}}
 function getKey(){return localStorage.getItem("p85key")||"";}
 function setKey(k){localStorage.setItem("p85key",k);}
 
@@ -308,7 +331,7 @@ function render(){
   var app=document.getElementById("app");app.innerHTML="";
   // Header
   var h=document.createElement("div");h.className="hdr";
-  h.innerHTML="<h1>&#127947; Treningi Adama</h1><p>Blok luty-marzec 2026</p>";
+  h.innerHTML="<h1>&#127947; Treningi Adama</h1><p>Projekt 85 kg | Blok luty-marzec 2026</p>";
   app.appendChild(h);
   // Today banner
   renderBanner(app);
@@ -468,7 +491,53 @@ function renderWorkout(app){
   app.appendChild(wbox);
 }
 
-// ── TCX PARSER ──
+// ── TCX/GPX PARSER ──
+function parseRunFile(xmlText,fileName){
+  // Detect format by content, not extension (in case user renamed .tcx to .xml)
+  if(xmlText.indexOf("<gpx")!==-1||xmlText.indexOf("<GPX")!==-1)return parseGPX(xmlText);
+  return parseTCX(xmlText);
+}
+
+function parseGPX(xmlText){
+  var parser=new DOMParser();
+  var doc=parser.parseFromString(xmlText,"text/xml");
+  var trkpts=doc.getElementsByTagName("trkpt");
+  if(trkpts.length===0)return null;
+
+  var points=[];var hrs=[];var cads=[];var startTime=null;var endTime=null;
+  var prevLat=null;var prevLon=null;var totalDist=0;
+
+  for(var i=0;i<trkpts.length;i++){
+    var tp=trkpts[i];
+    var lat=parseFloat(tp.getAttribute("lat"));
+    var lon=parseFloat(tp.getAttribute("lon"));
+    var timeEl=tp.getElementsByTagName("time")[0];
+    var hrEl=tp.getElementsByTagName("hr")[0];
+    var cadEl=tp.getElementsByTagName("cad")[0];
+
+    var t=timeEl?new Date(timeEl.textContent):null;
+    if(t&&!startTime)startTime=t;
+    if(t)endTime=t;
+
+    // Haversine distance
+    if(prevLat!==null){
+      var R=6371000;
+      var dLat=(lat-prevLat)*Math.PI/180;
+      var dLon=(lon-prevLon)*Math.PI/180;
+      var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(prevLat*Math.PI/180)*Math.cos(lat*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+      totalDist+=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+    }
+    prevLat=lat;prevLon=lon;
+
+    var hr=hrEl?parseInt(hrEl.textContent):0;
+    var cad=cadEl?parseInt(cadEl.textContent)*2:0;
+    if(hr>0)hrs.push(hr);
+    if(cad>0)cads.push(cad);
+    points.push({time:t,dist:totalDist,hr:hr,cad:cad});
+  }
+  return buildSummary(points,totalDist,hrs,cads,startTime,endTime);
+}
+
 function parseTCX(xmlText){
   var parser=new DOMParser();
   var doc=parser.parseFromString(xmlText,"text/xml");
@@ -502,6 +571,10 @@ function parseTCX(xmlText){
   }
 
   if(!startTime||!endTime)return null;
+  return buildSummary(points,totalDist,hrs,cads,startTime,endTime);
+}
+
+function buildSummary(points,totalDist,hrs,cads,startTime,endTime){
   var totalSec=(endTime-startTime)/1000;
   var totalMin=totalSec/60;
   var distKm=totalDist/1000;
@@ -510,7 +583,6 @@ function parseTCX(xmlText){
   var maxHR=hrs.length>0?Math.max.apply(null,hrs):0;
   var avgCad=cads.length>0?Math.round(cads.reduce(function(a,b){return a+b;},0)/cads.length):0;
 
-  // Splits per km
   var splits=[];var kmMark=1;
   var lastKmTime=startTime;
   for(var i=0;i<points.length;i++){
@@ -518,7 +590,6 @@ function parseTCX(xmlText){
       var splitSec=(points[i].time-lastKmTime)/1000;
       var splitMin=Math.floor(splitSec/60);
       var splitS=Math.round(splitSec%60);
-      // HR range for this km
       var kmHrs=[];var kmCads=[];
       for(var j=0;j<points.length;j++){
         if(points[j].dist/1000>=(kmMark-1)&&points[j].dist/1000<=kmMark){
@@ -539,7 +610,7 @@ function parseTCX(xmlText){
   var durMin=Math.floor(totalMin);
   var durSec=Math.round(totalSec%60);
 
-  var summary="ANALIZA BIEGU (TCX)\n";
+  var summary="ANALIZA BIEGU\n";
   summary+="Dystans: "+distKm.toFixed(2)+" km\n";
   summary+="Czas: "+durMin+"min "+durSec+"s\n";
   summary+="Tempo sr.: "+paceMin+":"+String(paceSec).padStart(2,"0")+"/km\n";
@@ -556,8 +627,8 @@ function handleTCXUpload(file){
   var reader=new FileReader();
   reader.onload=function(e){
     var text=e.target.result;
-    var summary=parseTCX(text);
-    if(!summary){flash("Blad parsowania TCX");return;}
+    var summary=parseRunFile(text,file.name);
+    if(!summary){flash("Blad parsowania pliku");return;}
 
     // Show in chat as user message
     var msgsDiv=document.getElementById("chatMsgs");
@@ -618,10 +689,12 @@ function renderChat(app){
   box.appendChild(typing);
 
   var inputRow=document.createElement("div");inputRow.className="chat-input";
-  var fileBtn=document.createElement("button");fileBtn.className="chat-file";fileBtn.textContent="\u{1F4CE}";fileBtn.title="Wgraj TCX/GPX";
-  var fileInp=document.createElement("input");fileInp.type="file";fileInp.accept=".tcx,.gpx,.xml";fileInp.style.display="none";
+  var fileBtn=document.createElement("button");fileBtn.className="chat-file";fileBtn.textContent="\u{1F4CE}";fileBtn.title="Wgraj bieg";
+  var fileInp=document.createElement("input");fileInp.type="file";fileInp.style.display="none";
   fileInp.onchange=function(){if(this.files[0])handleTCXUpload(this.files[0]);this.value="";};
-  fileBtn.onclick=function(){fileInp.click();};
+  fileBtn.onclick=function(){
+    if(confirm("Jesli plik TCX jest wyszarzony w pickerze:\n\n1. Otworz apke Pliki\n2. Znajdz plik TCX\n3. Przytrzymaj palcem\n4. Zmien nazwe z .tcx na .xml\n5. Wgrywanie zadziala\n\nLub tapnij OK i sprobuj wybrac plik.")){fileInp.click();}
+  };
   var input=document.createElement("input");input.id="chatInput";input.placeholder="Napisz do trenera...";
   input.addEventListener("keydown",function(e){if(e.key==="Enter")sendChat();});
   var sendBtn=document.createElement("button");sendBtn.id="chatSend";sendBtn.textContent="Wyslij";
